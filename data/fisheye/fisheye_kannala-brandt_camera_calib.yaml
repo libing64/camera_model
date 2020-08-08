@@ -1,0 +1,15 @@
+%YAML:1.0
+---
+model_type: KANNALA_BRANDT
+camera_name: fisheye_kannala-brandt
+image_width: 960
+image_height: 600
+projection_parameters:
+   k2: 2.5773912070218150e-02
+   k3: -2.7345542064950989e-02
+   k4: 2.5950947011271125e-02
+   k5: -9.7522429072694344e-03
+   mu: 2.2735285216121716e+02
+   mv: 2.2657943420362352e+02
+   u0: 4.7166695251443213e+02
+   v0: 3.0549483712507038e+02

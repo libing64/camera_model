@@ -1,0 +1,16 @@
+%YAML:1.0
+---
+model_type: PINHOLE
+camera_name: fisheye_pinhole
+image_width: 960
+image_height: 600
+distortion_parameters:
+   k1: -2.5736129390828005e-01
+   k2: 5.2765685001765629e-02
+   p1: 4.1658997477126702e-03
+   p2: -4.1063465533036922e-03
+projection_parameters:
+   fx: 2.4604583393139453e+02
+   fy: 2.4537035815615729e+02
+   cx: 4.8818073024007793e+02
+   cy: 2.9174349471122207e+02

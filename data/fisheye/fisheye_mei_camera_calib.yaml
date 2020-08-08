@@ -1,0 +1,18 @@
+%YAML:1.0
+---
+model_type: MEI
+camera_name: fisheye_mei
+image_width: 960
+image_height: 600
+mirror_parameters:
+   xi: 1.0799110400771077e+00
+distortion_parameters:
+   k1: -2.4625306784743095e-01
+   k2: 5.3962422839901353e-02
+   p1: 2.6183788901745280e-03
+   p2: -2.1197577430378737e-03
+projection_parameters:
+   gamma1: 4.7724621607048920e+02
+   gamma2: 4.7564921574092671e+02
+   u0: 4.7288499237101860e+02
+   v0: 3.0409070421914112e+02
