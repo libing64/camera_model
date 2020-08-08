@@ -1,0 +1,16 @@
+%YAML:1.0
+---
+model_type: PINHOLE
+camera_name: osmo_pinhole
+image_width: 1920
+image_height: 1080
+distortion_parameters:
+   k1: 1.7838481547946314e-01
+   k2: -6.0098681119904285e-01
+   p1: -7.1415451256699324e-04
+   p2: 2.7555942977269680e-04
+projection_parameters:
+   fx: 1.1630858422284912e+03
+   fy: 1.1627390910219065e+03
+   cx: 9.5472500492563722e+02
+   cy: 5.4036641550554498e+02

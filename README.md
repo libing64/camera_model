@@ -29,3 +29,19 @@ See [Camera.h](https://github.com/dvorak0/camera_model/blob/master/include/camod
 
 ## scaramuzza
 ./Calibration -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model scaramuzza --camera-name fisheye_scaramuzza -v
+
+
+## example osmo pocket
+## mei model
+./Calibration -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model mei --camera-name osmo_mei -v
+
+
+## pinhole model
+./Calibration -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model pinhole --camera-name osmo_pinhole -v
+
+
+## kannala-brandt
+./Calibration -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model kannala-brandt --camera-name osmo_kannala-brandt -v
+
+## scaramuzza
+./Calibration -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model scaramuzza --camera-name osmo_scaramuzza -v

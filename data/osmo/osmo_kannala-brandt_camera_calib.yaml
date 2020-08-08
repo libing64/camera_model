@@ -1,0 +1,15 @@
+%YAML:1.0
+---
+model_type: KANNALA_BRANDT
+camera_name: osmo_kannala-brandt
+image_width: 1920
+image_height: 1080
+projection_parameters:
+   k2: 4.5248623378188629e-01
+   k3: 8.6819612088591391e-01
+   k4: -9.4386775354486829e+00
+   k5: 2.0473684233998849e+01
+   mu: 1.1641271411914624e+03
+   mv: 1.1637931376564286e+03
+   u0: 9.5420683314112648e+02
+   v0: 5.4210747707944529e+02
