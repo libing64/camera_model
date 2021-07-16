@@ -23,6 +23,7 @@ public:
     void clear(void);
 
     void addChessboardData(const std::vector<cv::Point2f>& corners);
+    void addMarkerData(const std::vector<cv::Point2f> &corners, const std::vector<cv::Point3f>& scenePoints);
 
     bool calibrate(void);
 

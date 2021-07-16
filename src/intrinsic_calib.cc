@@ -17,6 +17,7 @@ int main(int argc, char** argv)
     float squareSize;
     std::string inputDir;
     std::string cameraModel;
+    std::string pattern;
     std::string cameraName;
     std::string prefix;
     std::string fileExtension;
@@ -33,6 +34,7 @@ int main(int argc, char** argv)
         ("size,s", boost::program_options::value<float>(&squareSize)->default_value(7.f), "Size of one square in mm")
         ("input,i", boost::program_options::value<std::string>(&inputDir)->default_value("calibrationdata"), "Input directory containing chessboard images")
         ("prefix,p", boost::program_options::value<std::string>(&prefix)->default_value("left-"), "Prefix of images")
+        ("pattern",  boost::program_options::value<std::string>(&pattern)->default_value("chessboard"), "Pattern type")
         ("file-extension,e", boost::program_options::value<std::string>(&fileExtension)->default_value(".png"), "File extension of images")
         ("camera-model", boost::program_options::value<std::string>(&cameraModel)->default_value("mei"), "Camera model: kannala-brandt | mei | pinhole")
         ("camera-name", boost::program_options::value<std::string>(&cameraName)->default_value("camera"), "Name of camera")
@@ -96,6 +98,53 @@ int main(int argc, char** argv)
         break;
     case camodocal::Camera::SCARAMUZZA:
         std::cout << "# INFO: Camera model: Scaramuzza-Omnidirect" << std::endl;
+        break;
+    }
+
+    camodocal::Camera::PatternType patternType;
+    if (boost::iequals(pattern, "chessboard"))
+    {
+        patternType = camodocal::Camera::CHESSBOARD;
+    }
+    else if (boost::iequals(pattern, "circles_grid"))
+    {
+        patternType = camodocal::Camera::CIRCLES_GRID;
+    }
+    else if (boost::iequals(pattern, "asymmetric_circles_grid"))
+    {
+        patternType = camodocal::Camera::ASYMMETRIC_CIRCLES_GRID;
+    }
+    else if (boost::iequals(pattern, "aruco"))
+    {
+        patternType = camodocal::Camera::ARUCO;
+    }
+    else if (boost::iequals(pattern, "charuco"))
+    {
+        patternType = camodocal::Camera::CHARUCO;
+    } else 
+    {
+        std::cerr << "# ERROR: Unknown pattern type: " << pattern << std::endl;
+        return 1;
+    }
+
+    switch (patternType)
+    {
+    case camodocal::Camera::CHESSBOARD:
+        std::cout << "# INFO: pattern type: chessboard" << std::endl;
+        break;
+    case camodocal::Camera::CIRCLES_GRID:
+        std::cout << "# INFO: pattern type: circles_grid" << std::endl;
+        break;
+    case camodocal::Camera::ASYMMETRIC_CIRCLES_GRID:
+        std::cout << "# INFO: pattern type: asymmetric_circles_grid" << std::endl;
+        break;
+    case camodocal::Camera::ARUCO:
+        std::cout << "# INFO: pattern type: aruco" << std::endl;
+        break;
+    case camodocal::Camera::CHARUCO:
+        std::cout << "# INFO: pattern type: charuco" << std::endl;
+        break;
+    default:
         break;
     }
 

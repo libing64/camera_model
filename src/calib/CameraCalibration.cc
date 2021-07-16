@@ -64,6 +64,13 @@ CameraCalibration::addChessboardData(const std::vector<cv::Point2f>& corners)
     m_scenePoints.push_back(scenePointsInView);
 }
 
+void 
+CameraCalibration::addMarkerData(const std::vector<cv::Point2f> &corners, const std::vector<cv::Point3f>& scenePoints)
+{
+    m_imagePoints.push_back(corners);
+    m_scenePoints.push_back(scenePoints);
+}
+
 bool
 CameraCalibration::calibrate(void)
 {

@@ -20,7 +20,14 @@ public:
         PINHOLE,
         SCARAMUZZA
     };
-
+    enum PatternType
+    {
+        CHESSBOARD,
+        CIRCLES_GRID,
+        ASYMMETRIC_CIRCLES_GRID,
+        ARUCO,
+        CHARUCO,
+    };
     class Parameters
     {
     public:
