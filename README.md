@@ -14,7 +14,7 @@ See [Camera.h](https://github.com/dvorak0/camera_model/blob/master/include/camod
  - spaceToPlane: Projects 3D points to the image plane (Pi function)
 
 
-# examples
+# intrinsic calibration
 
 ## mei model
 ./Calibration -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model mei --camera-name fisheye_mei -v
@@ -45,3 +45,12 @@ See [Camera.h](https://github.com/dvorak0/camera_model/blob/master/include/camod
 
 ## scaramuzza
 ./Calibration -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model scaramuzza --camera-name osmo_scaramuzza -v
+
+
+# stereo calibration
+```
+./stereo_calib -i ../data/stereo_images/ -e jpg --prefix-l left --prefix-r right --camera-model mei
+```
+
+# TODO
+* add detector, square, circle, charuco
