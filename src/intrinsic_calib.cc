@@ -39,6 +39,28 @@ static bool readArucoMarkerParameters(std::string filename, cv::Ptr<cv::aruco::D
     fs["errorCorrectionRate"] >> params->errorCorrectionRate;
     return true;
 }
+void calcBoardCornerPositions(cv::Size boardSize, float squareSize, std::vector<cv::Point3f>& corners,
+                                     camodocal::Camera::PatternType patternType)
+{
+    corners.clear();
+    switch(patternType)
+    {
+    case camodocal::Camera::CHESSBOARD:
+    case camodocal::Camera::CIRCLES_GRID:
+        for( int i = 0; i < boardSize.height; ++i )
+            for( int j = 0; j < boardSize.width; ++j )
+                corners.push_back(cv::Point3f(j*squareSize, i*squareSize, 0));
+        break;
+
+    case camodocal::Camera::ASYMMETRIC_CIRCLES_GRID:
+        for( int i = 0; i < boardSize.height; i++ )
+            for( int j = 0; j < boardSize.width; j++ )
+                corners.push_back(cv::Point3f((2*j + i % 2)*squareSize, i*squareSize, 0));
+        break;
+    default:
+        break;
+    }
+}
 
 int main(int argc, char** argv)
 {
@@ -290,27 +312,42 @@ int main(int argc, char** argv)
                 break;
             }
         case camodocal::Camera::CIRCLES_GRID:
-        {
-            std::vector<cv::Point2f> circle_points;
-            int flags = cv::CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_NORMALIZE_IMAGE;
-            cv::findCirclesGrid(image, boardSize, circle_points, flags);
-            break;
-        }
         case camodocal::Camera::ASYMMETRIC_CIRCLES_GRID:
         {
             std::vector<cv::Point2f> circle_points;
-            int flags = cv::CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_NORMALIZE_IMAGE | cv::CALIB_CB_ASYMMETRIC_GRID;
-            cv::findCirclesGrid(image, boardSize, circle_points, flags);
+            int flags = cv::CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_NORMALIZE_IMAGE;
+            if (patternType == camodocal::Camera::ASYMMETRIC_CIRCLES_GRID)
+            {
+                flags |=  cv::CALIB_CB_ASYMMETRIC_GRID;
+            }
+            bool found = cv::findCirclesGrid(image, boardSize, circle_points, flags);
+
+            if (found)
+            {
+                if (verbose)
+                {
+                    std::cerr << "# INFO: Detected circles_grid in image " << i + 1 << ", " << imageFilenames.at(i) << std::endl;
+                }
+                std::vector<cv::Point3f> objectPoints;
+                calcBoardCornerPositions(boardSize, squareSize, objectPoints, patternType);
+                calibration.addMarkerData(circle_points, objectPoints);
+
+                cv::Mat sketch;
+                image.copyTo(sketch);
+                cv::drawChessboardCorners(sketch, boardSize, cv::Mat(circle_points), found);
+                cv::imshow("Image", sketch);
+                cv::waitKey(50);
+            } else if (verbose)
+            {
+                std::cerr << "# INFO: Did not detect circles_grid in image " << i + 1 << std::endl;
+            }
+            chessboardFound.at(i) = found;
             break;
         }
-
-
         case camodocal::Camera::ARUCO:
         {
             break;
         }
-
-
         case camodocal::Camera::CHARUCO:
         {
             std::vector<cv::Point2f> corners, rejected;
