@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${default}",
+                "/usr/include/",
+                "/usr/include/eigen3/",
+                "/opt/ros/noetic/include/",
+                "/opt/ros/noetic/",
+                "/usr/include/pcl-1.10/",
+                "src",
+                "include",
+                "/usr/include/ceres/",
+                "/usr/include/vtk-7.1/"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
