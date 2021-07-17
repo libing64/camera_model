@@ -62,6 +62,16 @@ void calcBoardCornerPositions(cv::Size boardSize, float squareSize, std::vector<
     }
 }
 
+void calcArucoCornerPositions(cv::Ptr<cv::aruco::CharucoBoard>& board, std::vector<int> corners_id, std::vector<cv::Point3f>& objectPoints)
+{
+    objectPoints.clear();
+    for(int i = 0; i < corners_id.size(); i++)
+    {
+        int id = corners_id[i];
+        objectPoints.push_back(board->chessboardCorners[id]);
+    }
+}
+
 int main(int argc, char** argv)
 {
     cv::Size boardSize;
@@ -372,13 +382,22 @@ int main(int argc, char** argv)
             cv::Mat sketch;
             image.copyTo(sketch);
             if(ids.size() > 0) 
+            {
                 cv::aruco::drawDetectedMarkers(sketch, corners);
-
+            }
             if(currentCharucoCorners.total() > 0)
+            {
                 cv::aruco::drawDetectedCornersCharuco(sketch, currentCharucoCorners, currentCharucoIds);
-
-            cv::imshow("Image", sketch);
-            cv::waitKey(50);
+            }
+            if (ids.size() > 0)
+            {
+                //get 3d position of aruco corers
+                std::vector<cv::Point3f> objectPoints;
+                calcArucoCornerPositions(charucoboard, ids, objectPoints);
+                calibration.addMarkerData(corners, objectPoints);
+                cv::imshow("Image", sketch);
+                cv::waitKey(50);
+            }
             break;
         }
 
