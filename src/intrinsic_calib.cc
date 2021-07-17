@@ -6,21 +6,54 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/calib3d/calib3d.hpp>
+#include <opencv2/aruco/charuco.hpp>
 
 #include "camodocal/chessboard/Chessboard.h"
 #include "camodocal/calib/CameraCalibration.h"
 #include "camodocal/gpl/gpl.h"
 
+static bool readArucoMarkerParameters(std::string filename, cv::Ptr<cv::aruco::DetectorParameters> &params) {
+    cv::FileStorage fs(filename, cv::FileStorage::READ);
+    if(!fs.isOpened())
+        return false;
+    fs["adaptiveThreshWinSizeMin"] >> params->adaptiveThreshWinSizeMin;
+    fs["adaptiveThreshWinSizeMax"] >> params->adaptiveThreshWinSizeMax;
+    fs["adaptiveThreshWinSizeStep"] >> params->adaptiveThreshWinSizeStep;
+    fs["adaptiveThreshConstant"] >> params->adaptiveThreshConstant;
+    fs["minMarkerPerimeterRate"] >> params->minMarkerPerimeterRate;
+    fs["maxMarkerPerimeterRate"] >> params->maxMarkerPerimeterRate;
+    fs["polygonalApproxAccuracyRate"] >> params->polygonalApproxAccuracyRate;
+    fs["minCornerDistanceRate"] >> params->minCornerDistanceRate;
+    fs["minDistanceToBorder"] >> params->minDistanceToBorder;
+    fs["minMarkerDistanceRate"] >> params->minMarkerDistanceRate;
+    fs["cornerRefinementMethod"] >> params->cornerRefinementMethod;
+    fs["cornerRefinementWinSize"] >> params->cornerRefinementWinSize;
+    fs["cornerRefinementMaxIterations"] >> params->cornerRefinementMaxIterations;
+    fs["cornerRefinementMinAccuracy"] >> params->cornerRefinementMinAccuracy;
+    fs["markerBorderBits"] >> params->markerBorderBits;
+    fs["perspectiveRemovePixelPerCell"] >> params->perspectiveRemovePixelPerCell;
+    fs["perspectiveRemoveIgnoredMarginPerCell"] >> params->perspectiveRemoveIgnoredMarginPerCell;
+    fs["maxErroneousBitsInBorderRate"] >> params->maxErroneousBitsInBorderRate;
+    fs["minOtsuStdDev"] >> params->minOtsuStdDev;
+    fs["errorCorrectionRate"] >> params->errorCorrectionRate;
+    return true;
+}
+
 int main(int argc, char** argv)
 {
     cv::Size boardSize;
     float squareSize;
+    float markerSize;
+    int dictionaryId;
     std::string inputDir;
     std::string cameraModel;
     std::string pattern;
     std::string cameraName;
     std::string prefix;
     std::string fileExtension;
+    std::string arucoParams;
+    bool arucoRefine;
     bool useOpenCV;
     bool viewResults;
     bool verbose;
@@ -32,13 +65,17 @@ int main(int argc, char** argv)
         ("width,w", boost::program_options::value<int>(&boardSize.width)->default_value(8), "Number of inner corners on the chessboard pattern in x direction")
         ("height,h", boost::program_options::value<int>(&boardSize.height)->default_value(12), "Number of inner corners on the chessboard pattern in y direction")
         ("size,s", boost::program_options::value<float>(&squareSize)->default_value(7.f), "Size of one square in mm")
+        ("marker-side-length,ml", boost::program_options::value<float>(&markerSize)->default_value(0.02), "length of aruco side in m")
+        ("dictionary-id,d", boost::program_options::value<int>(&dictionaryId)->default_value(0), "aruco marker dictionary id")
         ("input,i", boost::program_options::value<std::string>(&inputDir)->default_value("calibrationdata"), "Input directory containing chessboard images")
         ("prefix,p", boost::program_options::value<std::string>(&prefix)->default_value("left-"), "Prefix of images")
         ("pattern",  boost::program_options::value<std::string>(&pattern)->default_value("chessboard"), "Pattern type")
+        ("dp",  boost::program_options::value<std::string>(&arucoParams)->default_value(""), "detector parameters")
         ("file-extension,e", boost::program_options::value<std::string>(&fileExtension)->default_value(".png"), "File extension of images")
         ("camera-model", boost::program_options::value<std::string>(&cameraModel)->default_value("mei"), "Camera model: kannala-brandt | mei | pinhole")
         ("camera-name", boost::program_options::value<std::string>(&cameraName)->default_value("camera"), "Name of camera")
         ("opencv", boost::program_options::bool_switch(&useOpenCV)->default_value(true), "Use OpenCV to detect corners")
+        ("rs", boost::program_options::bool_switch(&arucoRefine)->default_value(true), "Refine strategy for aruco detector")
         ("view-results", boost::program_options::bool_switch(&viewResults)->default_value(false), "View results")
         ("verbose,v", boost::program_options::bool_switch(&verbose)->default_value(true), "Verbose output")
         ;
@@ -101,7 +138,7 @@ int main(int argc, char** argv)
         break;
     }
 
-    camodocal::Camera::PatternType patternType;
+    camodocal::Camera::PatternType patternType = camodocal::Camera::CHESSBOARD;
     if (boost::iequals(pattern, "chessboard"))
     {
         patternType = camodocal::Camera::CHESSBOARD;
@@ -127,6 +164,11 @@ int main(int argc, char** argv)
         return 1;
     }
 
+
+    cv::Ptr<cv::aruco::Dictionary> dictionary;
+    cv::Ptr<cv::aruco::DetectorParameters> detectorParams;
+    cv::Ptr<cv::aruco::CharucoBoard> charucoboard;
+
     switch (patternType)
     {
     case camodocal::Camera::CHESSBOARD:
@@ -142,8 +184,22 @@ int main(int argc, char** argv)
         std::cout << "# INFO: pattern type: aruco" << std::endl;
         break;
     case camodocal::Camera::CHARUCO:
+    {
         std::cout << "# INFO: pattern type: charuco" << std::endl;
+        dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::PREDEFINED_DICTIONARY_NAME(dictionaryId));
+
+        // create charuco board object
+        charucoboard = cv::aruco::CharucoBoard::create(boardSize.width, boardSize.height, squareSize, markerSize, dictionary);
+    
+        detectorParams = cv::aruco::DetectorParameters::create();
+        bool readOk = readArucoMarkerParameters(arucoParams, detectorParams);
+        if (!readOk)
+        {
+            std::cerr << "invalid aruco detector parameters file" << std::endl;
+            return 0;
+        }
         break;
+    }
     default:
         break;
     }
@@ -205,30 +261,120 @@ int main(int argc, char** argv)
     {
         image = cv::imread(imageFilenames.at(i), -1);
 
-        camodocal::Chessboard chessboard(boardSize, image);
-
-        chessboard.findCorners(useOpenCV);
-        if (chessboard.cornersFound())
+        switch (patternType)
         {
-            if (verbose)
+            case camodocal::Camera::CHESSBOARD:
             {
-                std::cerr << "# INFO: Detected chessboard in image " << i + 1 << ", " << imageFilenames.at(i) << std::endl;
+                camodocal::Chessboard chessboard(boardSize, image);
+                chessboard.findCorners(useOpenCV);
+                if (chessboard.cornersFound())
+                {
+                    if (verbose)
+                    {
+                        std::cerr << "# INFO: Detected chessboard in image " << i + 1 << ", " << imageFilenames.at(i) << std::endl;
+                    }
+
+                    calibration.addChessboardData(chessboard.getCorners());
+
+                    cv::Mat sketch;
+                    chessboard.getSketch().copyTo(sketch);
+
+                    cv::imshow("Image", sketch);
+                    cv::waitKey(50);
+                }
+                else if (verbose)
+                {
+                    std::cerr << "# INFO: Did not detect chessboard in image " << i + 1 << std::endl;
+                }
+                chessboardFound.at(i) = chessboard.cornersFound();
+                break;
             }
+        case camodocal::Camera::CIRCLES_GRID:
+        {
+            std::vector<cv::Point2f> circle_points;
+            int flags = cv::CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_NORMALIZE_IMAGE;
+            cv::findCirclesGrid(image, boardSize, circle_points, flags);
+            break;
+        }
+        case camodocal::Camera::ASYMMETRIC_CIRCLES_GRID:
+        {
+            std::vector<cv::Point2f> circle_points;
+            int flags = cv::CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_NORMALIZE_IMAGE | cv::CALIB_CB_ASYMMETRIC_GRID;
+            cv::findCirclesGrid(image, boardSize, circle_points, flags);
+            break;
+        }
 
-            calibration.addChessboardData(chessboard.getCorners());
 
+        case camodocal::Camera::ARUCO:
+        {
+            break;
+        }
+
+
+        case camodocal::Camera::CHARUCO:
+        {
+            std::vector<cv::Point2f> corners, rejected;
+            std::vector<int> ids;
+            cv::aruco::detectMarkers(image, dictionary, corners, ids, detectorParams, rejected);
+
+
+            // refind strategy to detect more markers
+            cv::Ptr<cv::aruco::Board> board = charucoboard.staticCast<cv::aruco::Board>();
+            if (arucoRefine)
+            {
+                cv::aruco::refineDetectedMarkers(image, board, corners, ids, rejected);
+            }
+            // interpolate charuco corners
+            cv::Mat currentCharucoCorners, currentCharucoIds;
+            if(ids.size() > 0)
+            {
+                cv::aruco::interpolateCornersCharuco(corners, ids, image, charucoboard, currentCharucoCorners,
+                                                currentCharucoIds);
+            }
+            // draw results
             cv::Mat sketch;
-            chessboard.getSketch().copyTo(sketch);
+            image.copyTo(sketch);
+            if(ids.size() > 0) 
+                cv::aruco::drawDetectedMarkers(sketch, corners);
+
+            if(currentCharucoCorners.total() > 0)
+                cv::aruco::drawDetectedCornersCharuco(sketch, currentCharucoCorners, currentCharucoIds);
 
             cv::imshow("Image", sketch);
             cv::waitKey(50);
+            break;
         }
-        else if (verbose)
-        {
-            std::cerr << "# INFO: Did not detect chessboard in image " << i + 1 << std::endl;
+
+
+        default:
+            break;
         }
-        chessboardFound.at(i) = chessboard.cornersFound();
     }
+
+    //     camodocal::Chessboard chessboard(boardSize, image);
+
+    //     chessboard.findCorners(useOpenCV);
+    //     if (chessboard.cornersFound())
+    //     {
+    //         if (verbose)
+    //         {
+    //             std::cerr << "# INFO: Detected chessboard in image " << i + 1 << ", " << imageFilenames.at(i) << std::endl;
+    //         }
+
+    //         calibration.addChessboardData(chessboard.getCorners());
+
+    //         cv::Mat sketch;
+    //         chessboard.getSketch().copyTo(sketch);
+
+    //         cv::imshow("Image", sketch);
+    //         cv::waitKey(50);
+    //     }
+    //     else if (verbose)
+    //     {
+    //         std::cerr << "# INFO: Did not detect chessboard in image " << i + 1 << std::endl;
+    //     }
+    //     chessboardFound.at(i) = chessboard.cornersFound();
+    // }
     cv::destroyWindow("Image");
 
     if (calibration.sampleCount() < 10)

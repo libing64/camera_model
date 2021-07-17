@@ -54,3 +54,4 @@ See [Camera.h](https://github.com/dvorak0/camera_model/blob/master/include/camod
 
 # TODO
 * add detector, square, circle, charuco
+明天把支持不同pattern类型的代码给加上
