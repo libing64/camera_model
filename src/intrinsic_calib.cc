@@ -325,13 +325,13 @@ int main(int argc, char** argv)
         case camodocal::Camera::ASYMMETRIC_CIRCLES_GRID:
         {
             std::vector<cv::Point2f> circle_points;
-            int flags = cv::CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_NORMALIZE_IMAGE;
+            int flags = cv::CALIB_CB_SYMMETRIC_GRID;
             if (patternType == camodocal::Camera::ASYMMETRIC_CIRCLES_GRID)
             {
-                flags |=  cv::CALIB_CB_ASYMMETRIC_GRID;
+                flags =  cv::CALIB_CB_ASYMMETRIC_GRID;
             }
-            bool found = cv::findCirclesGrid(image, boardSize, circle_points, flags);
 
+            bool found = cv::findCirclesGrid(image, boardSize, circle_points, flags);
             if (found)
             {
                 if (verbose)

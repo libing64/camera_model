@@ -47,6 +47,13 @@ See [Camera.h](https://github.com/dvorak0/camera_model/blob/master/include/camod
 ./Calibration -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model scaramuzza --camera-name osmo_scaramuzza -v
 
 
+## cirlces grid
+
+./Calibration -w 4 -h 11 -i ../data/circles_grid -p circles_grid -e jpg --pattern asymmetric_circles_grid --camera-model pinhole --camera-name webcam -v
+注意，这里为何一定要4x11, 设置为11x4就不行
+
+
+
 # stereo calibration
 ```
 ./stereo_calib -i ../data/stereo_images/ -e jpg --prefix-l left --prefix-r right --camera-model mei
