@@ -11,14 +11,14 @@ python gen_pattern.py -o chessboard.svg --rows 10 --columns 7 --type checkerboar
 
 create a circle board pattern in file circleboard.svg with 9 rows, 6 columns and a radius of 15mm:
 ```
-python gen_pattern.py -o circleboard.svg --rows 9 --columns 6 --type circles --square_size 30 --radius_rate 4.0
+python gen_pattern.py -o circleboard.svg --rows 9 --columns 6 --type circles --square_size 30 --radius_rate 3.5
 
 ```
 
 create a circle board pattern in file acircleboard.svg with 7 rows, 5 columns and a square size of 10mm and less spacing between circle:
 
 ```
-python gen_pattern.py -o acircleboard.svg --rows 11 --columns 4 --type acircles --square_size 30 --radius_rate 4
+python gen_pattern.py -o acircleboard.svg --rows 11 --columns 4 --type acircles --square_size 25 --radius_rate 2
 ```
 
 If you want to change unit use -u option (mm inches, px, m)
