@@ -6,7 +6,7 @@
 #include <opencv2/core/core.hpp>
 #include <vector>
 
-namespace camodocal
+namespace camera_model
 {
 
 class Camera

@@ -6,7 +6,7 @@
 #include "camera_model/camera_models/PinholeCamera.h"
 #include "camera_model/camera_models/ScaramuzzaCamera.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 template<typename T>

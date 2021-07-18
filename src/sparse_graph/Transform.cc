@@ -1,6 +1,6 @@
 #include <camera_model/sparse_graph/Transform.h>
 
-namespace camodocal
+namespace camera_model
 {
 
 Transform::Transform()

@@ -7,7 +7,7 @@
 #include "ceres/rotation.h"
 #include "Camera.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 class PinholeCamera: public Camera

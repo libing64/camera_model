@@ -3,7 +3,7 @@
 
 #include "camera_model/calib/CameraCalibration.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 class StereoCameraCalibration

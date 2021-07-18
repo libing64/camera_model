@@ -10,7 +10,7 @@
 
 #include "camera_model/gpl/gpl.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 PinholeCamera::Parameters::Parameters()

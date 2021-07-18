@@ -40,19 +40,19 @@ static bool readArucoMarkerParameters(std::string filename, cv::Ptr<cv::aruco::D
     return true;
 }
 void calcBoardCornerPositions(cv::Size boardSize, float squareSize, std::vector<cv::Point3f>& corners,
-                                     camodocal::Camera::PatternType patternType)
+                                     camera_model::Camera::PatternType patternType)
 {
     corners.clear();
     switch(patternType)
     {
-    case camodocal::Camera::CHESSBOARD:
-    case camodocal::Camera::CIRCLES_GRID:
+    case camera_model::Camera::CHESSBOARD:
+    case camera_model::Camera::CIRCLES_GRID:
         for( int i = 0; i < boardSize.height; ++i )
             for( int j = 0; j < boardSize.width; ++j )
                 corners.push_back(cv::Point3f(j*squareSize, i*squareSize, 0));
         break;
 
-    case camodocal::Camera::ASYMMETRIC_CIRCLES_GRID:
+    case camera_model::Camera::ASYMMETRIC_CIRCLES_GRID:
         for( int i = 0; i < boardSize.height; i++ )
             for( int j = 0; j < boardSize.width; j++ )
                 corners.push_back(cv::Point3f((2*j + i % 2)*squareSize, i*squareSize, 0));
@@ -129,22 +129,22 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    camodocal::Camera::ModelType modelType;
+    camera_model::Camera::ModelType modelType;
     if (boost::iequals(cameraModel, "kannala-brandt"))
     {
-        modelType = camodocal::Camera::KANNALA_BRANDT;
+        modelType = camera_model::Camera::KANNALA_BRANDT;
     }
     else if (boost::iequals(cameraModel, "mei"))
     {
-        modelType = camodocal::Camera::MEI;
+        modelType = camera_model::Camera::MEI;
     }
     else if (boost::iequals(cameraModel, "pinhole"))
     {
-        modelType = camodocal::Camera::PINHOLE;
+        modelType = camera_model::Camera::PINHOLE;
     }
     else if (boost::iequals(cameraModel, "scaramuzza"))
     {
-        modelType = camodocal::Camera::SCARAMUZZA;
+        modelType = camera_model::Camera::SCARAMUZZA;
     }
     else
     {
@@ -154,40 +154,40 @@ int main(int argc, char** argv)
 
     switch (modelType)
     {
-    case camodocal::Camera::KANNALA_BRANDT:
+    case camera_model::Camera::KANNALA_BRANDT:
         std::cout << "# INFO: Camera model: Kannala-Brandt" << std::endl;
         break;
-    case camodocal::Camera::MEI:
+    case camera_model::Camera::MEI:
         std::cout << "# INFO: Camera model: Mei" << std::endl;
         break;
-    case camodocal::Camera::PINHOLE:
+    case camera_model::Camera::PINHOLE:
         std::cout << "# INFO: Camera model: Pinhole" << std::endl;
         break;
-    case camodocal::Camera::SCARAMUZZA:
+    case camera_model::Camera::SCARAMUZZA:
         std::cout << "# INFO: Camera model: Scaramuzza-Omnidirect" << std::endl;
         break;
     }
 
-    camodocal::Camera::PatternType patternType = camodocal::Camera::CHESSBOARD;
+    camera_model::Camera::PatternType patternType = camera_model::Camera::CHESSBOARD;
     if (boost::iequals(pattern, "chessboard"))
     {
-        patternType = camodocal::Camera::CHESSBOARD;
+        patternType = camera_model::Camera::CHESSBOARD;
     }
     else if (boost::iequals(pattern, "circles_grid"))
     {
-        patternType = camodocal::Camera::CIRCLES_GRID;
+        patternType = camera_model::Camera::CIRCLES_GRID;
     }
     else if (boost::iequals(pattern, "asymmetric_circles_grid"))
     {
-        patternType = camodocal::Camera::ASYMMETRIC_CIRCLES_GRID;
+        patternType = camera_model::Camera::ASYMMETRIC_CIRCLES_GRID;
     }
     else if (boost::iequals(pattern, "aruco"))
     {
-        patternType = camodocal::Camera::ARUCO;
+        patternType = camera_model::Camera::ARUCO;
     }
     else if (boost::iequals(pattern, "charuco"))
     {
-        patternType = camodocal::Camera::CHARUCO;
+        patternType = camera_model::Camera::CHARUCO;
     } else 
     {
         std::cerr << "# ERROR: Unknown pattern type: " << pattern << std::endl;
@@ -201,19 +201,19 @@ int main(int argc, char** argv)
 
     switch (patternType)
     {
-    case camodocal::Camera::CHESSBOARD:
+    case camera_model::Camera::CHESSBOARD:
         std::cout << "# INFO: pattern type: chessboard" << std::endl;
         break;
-    case camodocal::Camera::CIRCLES_GRID:
+    case camera_model::Camera::CIRCLES_GRID:
         std::cout << "# INFO: pattern type: circles_grid" << std::endl;
         break;
-    case camodocal::Camera::ASYMMETRIC_CIRCLES_GRID:
+    case camera_model::Camera::ASYMMETRIC_CIRCLES_GRID:
         std::cout << "# INFO: pattern type: asymmetric_circles_grid" << std::endl;
         break;
-    case camodocal::Camera::ARUCO:
+    case camera_model::Camera::ARUCO:
         std::cout << "# INFO: pattern type: aruco" << std::endl;
         break;
-    case camodocal::Camera::CHARUCO:
+    case camera_model::Camera::CHARUCO:
     {
         std::cout << "# INFO: pattern type: charuco" << std::endl;
         std::cout << "# INFO: dictionary id: " << dictionaryId << std::endl;
@@ -283,7 +283,7 @@ int main(int argc, char** argv)
     cv::Mat image = cv::imread(imageFilenames.front(), -1);
     const cv::Size frameSize = image.size();
 
-    camodocal::CameraCalibration calibration(modelType, cameraName, frameSize, boardSize, squareSize);
+    camera_model::CameraCalibration calibration(modelType, cameraName, frameSize, boardSize, squareSize);
     calibration.setVerbose(verbose);
 
     std::vector<bool> chessboardFound(imageFilenames.size(), false);
@@ -293,9 +293,9 @@ int main(int argc, char** argv)
 
         switch (patternType)
         {
-            case camodocal::Camera::CHESSBOARD:
+            case camera_model::Camera::CHESSBOARD:
             {
-                camodocal::Chessboard chessboard(boardSize, image);
+                camera_model::Chessboard chessboard(boardSize, image);
                 chessboard.findCorners(useOpenCV);
                 if (chessboard.cornersFound())
                 {
@@ -319,12 +319,12 @@ int main(int argc, char** argv)
                 chessboardFound.at(i) = chessboard.cornersFound();
                 break;
             }
-            case camodocal::Camera::CIRCLES_GRID:
-            case camodocal::Camera::ASYMMETRIC_CIRCLES_GRID:
+            case camera_model::Camera::CIRCLES_GRID:
+            case camera_model::Camera::ASYMMETRIC_CIRCLES_GRID:
             {
                 std::vector<cv::Point2f> circle_points;
                 int flags = cv::CALIB_CB_SYMMETRIC_GRID;
-                if (patternType == camodocal::Camera::ASYMMETRIC_CIRCLES_GRID)
+                if (patternType == camera_model::Camera::ASYMMETRIC_CIRCLES_GRID)
                 {
                     flags =  cv::CALIB_CB_ASYMMETRIC_GRID;
                 }
@@ -352,11 +352,11 @@ int main(int argc, char** argv)
                 chessboardFound.at(i) = found;
                 break;
             }
-            case camodocal::Camera::ARUCO:
+            case camera_model::Camera::ARUCO:
             {
                 break;
             }
-            case camodocal::Camera::CHARUCO:
+            case camera_model::Camera::CHARUCO:
             {
                 std::vector<std::vector<cv::Point2f> > corners, rejected;
                 std::vector<int> ids;
@@ -411,7 +411,7 @@ int main(int argc, char** argv)
         }
     }
 
-    //     camodocal::Chessboard chessboard(boardSize, image);
+    //     camera_model::Chessboard chessboard(boardSize, image);
 
     //     chessboard.findCorners(useOpenCV);
     //     if (chessboard.cornersFound())
@@ -448,7 +448,7 @@ int main(int argc, char** argv)
         std::cerr << "# INFO: Calibrating..." << std::endl;
     }
 
-    double startTime = camodocal::timeInSeconds();
+    double startTime = camera_model::timeInSeconds();
 
     calibration.calibrate();
     calibration.writeParams(cameraName + "_camera_calib.yaml");
@@ -457,7 +457,7 @@ int main(int argc, char** argv)
     if (verbose)
     {
         std::cout << "# INFO: Calibration took a total time of "
-                  << std::fixed << std::setprecision(3) << camodocal::timeInSeconds() - startTime
+                  << std::fixed << std::setprecision(3) << camera_model::timeInSeconds() - startTime
                   << " sec.\n";
     }
 

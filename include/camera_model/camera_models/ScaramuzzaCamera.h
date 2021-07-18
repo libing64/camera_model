@@ -7,7 +7,7 @@
 #include "ceres/rotation.h"
 #include "Camera.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 #define SCARAMUZZA_POLY_SIZE 5
@@ -345,6 +345,6 @@ namespace camodocal
         p(0) = xn[0] * c + xn[1] * d + xc[0];
         p(1) = xn[0] * e + xn[1] + xc[1];
     }
-} // namespace camodocal
+} // namespace camera_model
 
 #endif

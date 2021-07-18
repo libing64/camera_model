@@ -4,7 +4,7 @@
 #include <boost/shared_ptr.hpp>
 #include <opencv2/core/core.hpp>
 
-namespace camodocal
+namespace camera_model
 {
 
 // forward declarations

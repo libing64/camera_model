@@ -5,7 +5,7 @@
 
 #include "camera_model/camera_models/Camera.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 class CameraCalibration

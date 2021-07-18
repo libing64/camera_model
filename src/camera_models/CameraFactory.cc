@@ -10,7 +10,7 @@
 
 #include "ceres/ceres.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 boost::shared_ptr<CameraFactory> CameraFactory::m_instance;

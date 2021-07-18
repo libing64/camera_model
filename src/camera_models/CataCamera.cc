@@ -11,7 +11,7 @@
 
 #include "camera_model/gpl/gpl.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 CataCamera::Parameters::Parameters()

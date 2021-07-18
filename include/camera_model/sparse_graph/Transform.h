@@ -5,7 +5,7 @@
 #include <eigen3/Eigen/Dense>
 #include <stdint.h>
 
-namespace camodocal
+namespace camera_model
 {
 
 class Transform

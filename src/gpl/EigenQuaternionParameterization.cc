@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace camodocal
+namespace camera_model
 {
 
 bool

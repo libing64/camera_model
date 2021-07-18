@@ -8,7 +8,7 @@
 
 #define MAX_CONTOUR_APPROX  7
 
-namespace camodocal
+namespace camera_model
 {
 
 Chessboard::Chessboard(cv::Size boardSize, cv::Mat& image)

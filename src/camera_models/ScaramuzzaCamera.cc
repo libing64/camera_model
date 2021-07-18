@@ -45,7 +45,7 @@ Eigen::VectorXd polyfit(Eigen::VectorXd &xVec, Eigen::VectorXd &yVec, int poly_o
     return x;
 }
 
-namespace camodocal
+namespace camera_model
 {
 
     OCAMCamera::Parameters::Parameters()
@@ -849,4 +849,4 @@ OCAMCamera::initUndistortMap(cv::Mat& map1, cv::Mat& map2, double fScale) const
         return oss.str();
     }
 
-} // namespace camodocal
+} // namespace camera_model

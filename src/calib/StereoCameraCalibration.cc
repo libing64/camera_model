@@ -9,7 +9,7 @@
 #include "camera_model/camera_models/CameraFactory.h"
 #include "camera_model/camera_models/CostFunctionFactory.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 StereoCameraCalibration::StereoCameraCalibration(Camera::ModelType modelType,

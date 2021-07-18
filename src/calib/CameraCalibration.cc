@@ -18,7 +18,7 @@
 #include "camera_model/camera_models/CostFunctionFactory.h"
 
 #include "ceres/ceres.h"
-namespace camodocal
+namespace camera_model
 {
 
 CameraCalibration::CameraCalibration()

@@ -11,7 +11,7 @@ namespace ceres
     class CostFunction;
 }
 
-namespace camodocal
+namespace camera_model
 {
 
 enum

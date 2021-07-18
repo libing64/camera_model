@@ -6,7 +6,7 @@
 #include "ceres/rotation.h"
 #include "camera_model/gpl/gpl.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 // Returns the 3D cross product skew symmetric matrix of a given 3D vector

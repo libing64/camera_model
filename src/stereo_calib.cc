@@ -63,22 +63,22 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    camodocal::Camera::ModelType modelType;
+    camera_model::Camera::ModelType modelType;
     if (boost::iequals(cameraModel, "kannala-brandt"))
     {
-        modelType = camodocal::Camera::KANNALA_BRANDT;
+        modelType = camera_model::Camera::KANNALA_BRANDT;
     }
     else if (boost::iequals(cameraModel, "mei"))
     {
-        modelType = camodocal::Camera::MEI;
+        modelType = camera_model::Camera::MEI;
     }
     else if (boost::iequals(cameraModel, "pinhole"))
     {
-        modelType = camodocal::Camera::PINHOLE;
+        modelType = camera_model::Camera::PINHOLE;
     }
     else if (boost::iequals(cameraModel, "scaramuzza"))
     {
-        modelType = camodocal::Camera::SCARAMUZZA;
+        modelType = camera_model::Camera::SCARAMUZZA;
     }
     else
     {
@@ -88,16 +88,16 @@ int main(int argc, char** argv)
 
     switch (modelType)
     {
-    case camodocal::Camera::KANNALA_BRANDT:
+    case camera_model::Camera::KANNALA_BRANDT:
         std::cout << "# INFO: Camera model: Kannala-Brandt" << std::endl;
         break;
-    case camodocal::Camera::MEI:
+    case camera_model::Camera::MEI:
         std::cout << "# INFO: Camera model: Mei" << std::endl;
         break;
-    case camodocal::Camera::PINHOLE:
+    case camera_model::Camera::PINHOLE:
         std::cout << "# INFO: Camera model: Pinhole" << std::endl;
         break;
-    case camodocal::Camera::SCARAMUZZA:
+    case camera_model::Camera::SCARAMUZZA:
         std::cout << "# INFO: Camera model: Scaramuzza-Omnidirect" << std::endl;
         break;
     }
@@ -192,7 +192,7 @@ int main(int argc, char** argv)
     cv::Mat imageR;
     const cv::Size frameSize = imageL.size();
 
-    camodocal::StereoCameraCalibration calibration(modelType, cameraNameL, cameraNameR, frameSize, boardSize, squareSize);
+    camera_model::StereoCameraCalibration calibration(modelType, cameraNameL, cameraNameR, frameSize, boardSize, squareSize);
     calibration.setVerbose(verbose);
 
     std::vector<bool> chessboardFoundL(imageFilenamesL.size(), false);
@@ -202,8 +202,8 @@ int main(int argc, char** argv)
         imageL = cv::imread(imageFilenamesL.at(i), -1);
         imageR = cv::imread(imageFilenamesR.at(i), -1);
 
-        camodocal::Chessboard chessboardL(boardSize, imageL);
-        camodocal::Chessboard chessboardR(boardSize, imageR);
+        camera_model::Chessboard chessboardL(boardSize, imageL);
+        camera_model::Chessboard chessboardR(boardSize, imageR);
 
         chessboardL.findCorners(useOpenCV);
         chessboardR.findCorners(useOpenCV);
@@ -249,7 +249,7 @@ int main(int argc, char** argv)
         std::cerr << "# INFO: Calibrating..." << std::endl;
     }
 
-    double startTime = camodocal::timeInSeconds();
+    double startTime = camera_model::timeInSeconds();
 
     calibration.calibrate();
     calibration.writeParams(outputDir);
@@ -257,7 +257,7 @@ int main(int argc, char** argv)
     if (verbose)
     {
         std::cout << "# INFO: Calibration took a total time of "
-                  << std::fixed << std::setprecision(3) << camodocal::timeInSeconds() - startTime
+                  << std::fixed << std::setprecision(3) << camera_model::timeInSeconds() - startTime
                   << " sec.\n";
     }
 

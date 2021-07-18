@@ -5,7 +5,7 @@
 
 #include "camera_model/chessboard/ChessboardCorner.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 class ChessboardQuad;

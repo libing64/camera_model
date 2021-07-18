@@ -3,7 +3,7 @@
 
 #include "ceres/local_parameterization.h"
 
-namespace camodocal
+namespace camera_model
 {
 
 class EigenQuaternionParameterization : public ceres::LocalParameterization
