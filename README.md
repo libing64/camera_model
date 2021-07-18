@@ -45,8 +45,9 @@ part of [camodocal](https://github.com/hengli/camodocal)
 
 感谢原作者 [Lionel Heng](https://github.com/hengli)
 
-感谢 [YZF](https://github.com/dvorak0)
+感谢 [YZF](https://github.com/dvorak0) 整理camera_model
 
+感谢 [Tianbo](https://github.com/groundmelon) 添加Scaramuzza模型实现
 
 # 用法
 ## 相机内参标定 intrinsic_calib
