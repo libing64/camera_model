@@ -294,8 +294,6 @@ int main(int argc, char** argv)
     {
         image = cv::imread(imageFilenames.at(i), -1);
 
-        cv::imshow("img", image);
-        cv::waitKey(0);
         switch (patternType)
         {
             case camodocal::Camera::CHESSBOARD:
@@ -343,7 +341,7 @@ int main(int argc, char** argv)
                     }
                     std::vector<cv::Point3f> objectPoints;
                     calcBoardCornerPositions(boardSize, squareSize, objectPoints, patternType);
-                    calibration.addMarkerData(circle_points, objectPoints);
+                    calibration.addCornersData(circle_points, objectPoints);
 
                     cv::Mat sketch;
                     image.copyTo(sketch);
@@ -366,7 +364,7 @@ int main(int argc, char** argv)
                 std::cout << "lines: " << __LINE__ << std::endl;
                 std::vector<std::vector<cv::Point2f> > corners, rejected;
                 std::vector<int> ids;
-                //detect aruco markers
+                //detect aruco markers [markers_cnt * 4]
                 cv::aruco::detectMarkers(image, dictionary, corners, ids, detectorParams, rejected);
 
                 std::cout << "corners size: " << corners.size() << std::endl;
@@ -398,7 +396,7 @@ int main(int argc, char** argv)
                 image.copyTo(sketch);
                 if(ids.size() > 0) 
                 {
-                    cv::aruco::drawDetectedMarkers(sketch, corners);
+                    //cv::aruco::drawDetectedMarkers(sketch, corners);
                 }
                 std::cout << "lines: " << __LINE__ << std::endl;
                 if(charuco_corners.size() > 0)
@@ -412,13 +410,13 @@ int main(int argc, char** argv)
                     //get 3d position of aruco corers
                     std::vector<cv::Point3f> objectPoints;
                     calcArucoCornerPositions(charucoboard, charuco_ids, objectPoints);
-                    //calibration.addMarkerData(corners, objectPoints);
+                    calibration.addCornersData(charuco_corners, objectPoints);
                     cv::imshow("Image", sketch);
-                    cv::waitKey(50);
+                    cv::waitKey(0);
                 } else 
                 {
                     cv::imshow("Image", image);
-                    cv::waitKey(0);
+                    cv::waitKey(50);
                 }
                 break;
             }

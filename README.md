@@ -17,51 +17,51 @@ See [Camera.h](https://github.com/dvorak0/camera_model/blob/master/include/camod
 # intrinsic calibration
 
 ## mei model
-./Calibration -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model mei --camera-name fisheye_mei -v
+./intrinsic_calib -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model mei --camera-name fisheye_mei -v
 
 
 ## pinhole model
-./Calibration -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model pinhole --camera-name fisheye_pinhole -v
+./intrinsic_calib -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model pinhole --camera-name fisheye_pinhole -v
 
 
 ## kannala-brandt
-./Calibration -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model kannala-brandt --camera-name fisheye_kannala-brandt -v
+./intrinsic_calib -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model kannala-brandt --camera-name fisheye_kannala-brandt -v
 
 ## scaramuzza
-./Calibration -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model scaramuzza --camera-name fisheye_scaramuzza -v
+./intrinsic_calib -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model scaramuzza --camera-name fisheye_scaramuzza -v
 
 
 ## example osmo pocket
 ## mei model
-./Calibration -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model mei --camera-name osmo_mei -v
+./intrinsic_calib -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model mei --camera-name osmo_mei -v
 
 
 ## pinhole model
-./Calibration -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model pinhole --camera-name osmo_pinhole -v
+./intrinsic_calib -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model pinhole --camera-name osmo_pinhole -v
 
 
 ## kannala-brandt
-./Calibration -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model kannala-brandt --camera-name osmo_kannala-brandt -v
+./intrinsic_calib -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model kannala-brandt --camera-name osmo_kannala-brandt -v
 
 ## scaramuzza
-./Calibration -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model scaramuzza --camera-name osmo_scaramuzza -v
+./intrinsic_calib -w 9 -h 6 -i ../data/osmo -p osmo_ -e jpg --camera-model scaramuzza --camera-name osmo_scaramuzza -v
 
 
 ## asymmetric cirlces grid
 ```
-./Calibration -w 4 -h 11 -i ../data/asymmetric_circles_grid -p asymmetric_circles_grid -e jpg --pattern asymmetric_circles_grid --camera-model pinhole --camera-name webcam -v
+./intrinsic_calib -w 4 -h 11 -i ../data/asymmetric_circles_grid -p asymmetric_circles_grid -e jpg --pattern asymmetric_circles_grid --camera-model pinhole --camera-name webcam -v
 ```
 
 注意，这里为何一定要4x11, 设置为11x4就不行
 
 ## circles grid
 ```
-./Calibration -w 9 -h 6 -i ../data/circles_grid -p circles_grid -e jpg --pattern circles_grid --camera-model pinhole --camera-name circles_grid_cam -v
+./intrinsic_calib -w 9 -h 6 -i ../data/circles_grid -p circles_grid -e jpg --pattern circles_grid --camera-model pinhole --camera-name circles_grid_cam -v
 ```
 
 ## charuco
 ```
-./Calibration -w 5 -h 7 -s 0.04 -ml 0.024 -i ../data/charuco -p charuco -e jpg --pattern charuco --dp ../data/pattern/detector_params.yml -d 10 --camera-model pinhole --camera-name charuco_cam -v
+./intrinsic_calib -w 5 -h 7 -s 0.04 --marker-size 0.024 -i ../data/charuco -p charuco -e jpg --pattern charuco --dp ../data/pattern/detector_params.yml -d 10 --camera-model pinhole --camera-name charuco_cam -v
 ```
 
 

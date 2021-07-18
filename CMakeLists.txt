@@ -20,7 +20,7 @@ include_directories(${CERES_INCLUDE_DIRS})
 include_directories("include")
 
 
-add_executable(Calibration 
+add_executable(intrinsic_calib 
     src/intrinsic_calib.cc
     src/chessboard/Chessboard.cc
     src/calib/CameraCalibration.cc
@@ -49,7 +49,7 @@ add_library(camera_model STATIC
     src/gpl/gpl.cc
     src/gpl/EigenQuaternionParameterization.cc)
 
-target_link_libraries(Calibration ${Boost_LIBRARIES} ${OpenCV_LIBS} ${CERES_LIBRARIES})
+target_link_libraries(intrinsic_calib ${Boost_LIBRARIES} ${OpenCV_LIBS} ${CERES_LIBRARIES})
 target_link_libraries(camera_model ${Boost_LIBRARIES} ${OpenCV_LIBS} ${CERES_LIBRARIES})
 
 
