@@ -49,25 +49,25 @@ See [Camera.h](https://github.com/dvorak0/camera_model/blob/master/include/camod
 
 ## asymmetric cirlces grid
 ```
-./intrinsic_calib -w 4 -h 11 -i ../data/asymmetric_circles_grid -p asymmetric_circles_grid -e jpg --pattern asymmetric_circles_grid --camera-model pinhole --camera-name webcam -v
+./intrinsic_calib -w 4 -h 11 -i ../data/asymmetric_circles_grid -p asymmetric_circles_grid -e jpg --pattern asymmetric_circles_grid --camera-model pinhole --camera-name webcam -v --view-results
 ```
 
 注意，这里为何一定要4x11, 设置为11x4就不行
 
 ## circles grid
 ```
-./intrinsic_calib -w 9 -h 6 -i ../data/circles_grid -p circles_grid -e jpg --pattern circles_grid --camera-model pinhole --camera-name circles_grid_cam -v
+./intrinsic_calib -w 9 -h 6 -i ../data/circles_grid -p circles_grid -e jpg --pattern circles_grid --camera-model pinhole --camera-name circles_grid_cam -v --view-results
 ```
 
 ## charuco
 ```
-./intrinsic_calib -w 5 -h 7 -s 0.04 --marker-size 0.024 -i ../data/charuco -p charuco -e jpg --pattern charuco --dp ../data/pattern/detector_params.yml -d 10 --camera-model pinhole --camera-name charuco_cam -v
+./intrinsic_calib -w 5 -h 7 -s 0.04 --marker-size 0.024 -i ../data/charuco -p charuco -e jpg --pattern charuco --dp ../data/pattern/detector_params.yml -d 10 --camera-model pinhole --camera-name charuco_cam -v --view-results
 ```
 
 
 # stereo calibration
 ```
-./stereo_calib -i ../data/stereo_images/ -e jpg --prefix-l left --prefix-r right --camera-model mei
+./stereo_calib -i ../data/stereo_images/ -e jpg --prefix-l left --prefix-r right --camera-model mei -v --view-results
 ```
 
 # TODO
