@@ -27,6 +27,7 @@ mkdir build
 cd build
 cmake ..
 make
+sudo make install
 ```
 
 ## 调用
@@ -84,7 +85,7 @@ See [Camera.h](https://github.com/libing64/camera_model/blob/master/include/came
 ## scaramuzza
 
 ```
-./intrinsic_calib -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model scaramuzza --camera-name fisheye_scaramuzza -v
+./intrinsic_calib -w 9 -h 6 -i ../data/fisheye -p left -e jpg --camera-model scaramuzza --camera-name fisheye_scaramuzza -v --view-results
 ```
 
 ## asymmetric cirlces grid
