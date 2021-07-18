@@ -29,6 +29,15 @@ cmake ..
 make
 ```
 
+## 调用
+编译安装之后， camera_model会作为共享库被安装在系统目录, 使用时无需添加源码，只添加依赖关系即可
+```
+cmake_minimum_required(VERSION 3.0)
+project(camera_model_example)
+
+add_executable(example example.cc)
+target_link_libraries(example camera_model)
+```
 
 # 参考 & 感谢
 part of [camodocal](https://github.com/hengli/camodocal)
