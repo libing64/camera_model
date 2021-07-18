@@ -1,13 +1,13 @@
-#include "camodocal/calib/StereoCameraCalibration.h"
+#include "camera_model/calib/StereoCameraCalibration.h"
 
 #include <boost/filesystem.hpp>
 #include <opencv2/core/eigen.hpp>
 
 #include "ceres/ceres.h"
-#include "camodocal/gpl/EigenQuaternionParameterization.h"
-#include "camodocal/gpl/EigenUtils.h"
-#include "camodocal/camera_models/CameraFactory.h"
-#include "camodocal/camera_models/CostFunctionFactory.h"
+#include "camera_model/gpl/EigenQuaternionParameterization.h"
+#include "camera_model/gpl/EigenUtils.h"
+#include "camera_model/camera_models/CameraFactory.h"
+#include "camera_model/camera_models/CostFunctionFactory.h"
 
 namespace camodocal
 {

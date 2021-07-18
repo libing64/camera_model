@@ -1,4 +1,4 @@
-#include "camodocal/camera_models/ScaramuzzaCamera.h"
+#include "camera_model/camera_models/ScaramuzzaCamera.h"
 
 #include <cmath>
 #include <cstdio>
@@ -11,7 +11,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include "camodocal/gpl/gpl.h"
+#include "camera_model/gpl/gpl.h"
 
 namespace camodocal
 {

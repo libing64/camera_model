@@ -9,9 +9,9 @@
 #include <opencv2/calib3d/calib3d.hpp>
 #include <opencv2/aruco/charuco.hpp>
 
-#include "camodocal/chessboard/Chessboard.h"
-#include "camodocal/calib/CameraCalibration.h"
-#include "camodocal/gpl/gpl.h"
+#include "camera_model/chessboard/Chessboard.h"
+#include "camera_model/calib/CameraCalibration.h"
+#include "camera_model/gpl/gpl.h"
 
 static bool readArucoMarkerParameters(std::string filename, cv::Ptr<cv::aruco::DetectorParameters> &params) {
     cv::FileStorage fs(filename, cv::FileStorage::READ);

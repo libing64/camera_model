@@ -6,9 +6,9 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-#include "camodocal/chessboard/Chessboard.h"
-#include "camodocal/calib/StereoCameraCalibration.h"
-#include "camodocal/gpl/gpl.h"
+#include "camera_model/chessboard/Chessboard.h"
+#include "camera_model/calib/StereoCameraCalibration.h"
+#include "camera_model/gpl/gpl.h"
 
 int main(int argc, char** argv)
 {

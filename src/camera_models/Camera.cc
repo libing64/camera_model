@@ -1,5 +1,5 @@
-#include "camodocal/camera_models/Camera.h"
-#include "camodocal/camera_models/ScaramuzzaCamera.h"
+#include "camera_model/camera_models/Camera.h"
+#include "camera_model/camera_models/ScaramuzzaCamera.h"
 
 #include <opencv2/calib3d/calib3d.hpp>
 

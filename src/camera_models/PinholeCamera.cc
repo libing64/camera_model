@@ -1,4 +1,4 @@
-#include "camodocal/camera_models/PinholeCamera.h"
+#include "camera_model/camera_models/PinholeCamera.h"
 
 #include <cmath>
 #include <cstdio>
@@ -8,7 +8,7 @@
 #include <opencv2/core/eigen.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-#include "camodocal/gpl/gpl.h"
+#include "camera_model/gpl/gpl.h"
 
 namespace camodocal
 {

@@ -1,7 +1,7 @@
 #ifndef STEREOCAMERACALIBRATION_H
 #define STEREOCAMERACALIBRATION_H
 
-#include "camodocal/calib/CameraCalibration.h"
+#include "camera_model/calib/CameraCalibration.h"
 
 namespace camodocal
 {

@@ -1,4 +1,4 @@
-#include "camodocal/gpl/gpl.h"
+#include "camera_model/gpl/gpl.h"
 
 #include <set>
 #ifdef _WIN32

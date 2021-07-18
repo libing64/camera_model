@@ -1,10 +1,10 @@
-#include "camodocal/camera_models/CostFunctionFactory.h"
+#include "camera_model/camera_models/CostFunctionFactory.h"
 
 #include "ceres/ceres.h"
-#include "camodocal/camera_models/CataCamera.h"
-#include "camodocal/camera_models/EquidistantCamera.h"
-#include "camodocal/camera_models/PinholeCamera.h"
-#include "camodocal/camera_models/ScaramuzzaCamera.h"
+#include "camera_model/camera_models/CataCamera.h"
+#include "camera_model/camera_models/EquidistantCamera.h"
+#include "camera_model/camera_models/PinholeCamera.h"
+#include "camera_model/camera_models/ScaramuzzaCamera.h"
 
 namespace camodocal
 {

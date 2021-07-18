@@ -1,4 +1,4 @@
-#include "camodocal/gpl/EigenQuaternionParameterization.h"
+#include "camera_model/gpl/EigenQuaternionParameterization.h"
 
 #include <cmath>
 
