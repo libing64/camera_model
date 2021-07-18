@@ -19,12 +19,7 @@ include_directories(${CERES_INCLUDE_DIRS})
 
 include_directories("include")
 
-
-
-
-
-
-add_library(camera_model STATIC
+add_library(camera_model SHARED
     src/chessboard/Chessboard.cc
     src/calib/CameraCalibration.cc
     src/camera_models/Camera.cc
@@ -48,7 +43,7 @@ target_link_libraries(stereo_calib camera_model)
 
 file(GLOB CALIB_HEADER_FILES include/camera_model/calib/*.h)
 file(GLOB CAMERA_MODELS_HEADER_FILES include/camera_model/camera_models/*.h)
-file(GLOB CHESSBOARD_HEADER_FILES include/camera_model/chessboad/*.h)
+file(GLOB CHESSBOARD_HEADER_FILES include/camera_model/chessboard/*.h)
 file(GLOB GPL_HEADER_FILES include/camera_model/gpl/*.h)
 file(GLOB SPARSE_GRAPH_HEADER_FILES include/camera_model/sparse_graph/*.h)
 
