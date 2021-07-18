@@ -69,7 +69,6 @@ void calcArucoCornerPositions(cv::Ptr<cv::aruco::CharucoBoard>& board, std::vect
     {
         int id = corners_id[i];
         objectPoints.push_back(board->chessboardCorners[id]);
-        std::cout << "corners: " << id << "   " << board->chessboardCorners[id] << std::endl;
     }
 }
 
@@ -217,14 +216,12 @@ int main(int argc, char** argv)
     case camodocal::Camera::CHARUCO:
     {
         std::cout << "# INFO: pattern type: charuco" << std::endl;
-        std::cout << "dictionary id: " << dictionaryId << std::endl;
+        std::cout << "# INFO: dictionary id: " << dictionaryId << std::endl;
         dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::PREDEFINED_DICTIONARY_NAME(dictionaryId));
 
         // create charuco board object
         charucoboard = cv::aruco::CharucoBoard::create(boardSize.width, boardSize.height, squareSize, markerSize, dictionary);
-    
         detectorParams = cv::aruco::DetectorParameters::create();
-        std::cout << "aruco param: " << arucoParams << std::endl;
         bool readOk = readArucoMarkerParameters(arucoParams, detectorParams);
         if (!readOk)
         {
@@ -361,17 +358,11 @@ int main(int argc, char** argv)
             }
             case camodocal::Camera::CHARUCO:
             {
-                std::cout << "lines: " << __LINE__ << std::endl;
                 std::vector<std::vector<cv::Point2f> > corners, rejected;
                 std::vector<int> ids;
-                //detect aruco markers [markers_cnt * 4]
+                //detect aruco markers [aruco_cnt * 4]
                 cv::aruco::detectMarkers(image, dictionary, corners, ids, detectorParams, rejected);
 
-                std::cout << "corners size: " << corners.size() << std::endl;
-                for (auto it : corners)
-                {
-                    std::cout << "size: " << it.size() << std::endl;
-                }
                 // refind strategy to detect more markers
                 cv::Ptr<cv::aruco::Board> board = charucoboard.staticCast<cv::aruco::Board>();
                 bool arucoRefine = true;
@@ -379,31 +370,25 @@ int main(int argc, char** argv)
                 {
                     cv::aruco::refineDetectedMarkers(image, board, corners, ids, rejected);
                 }
-                // interpolate charuco corners
-                //cv::Mat currentCharucoCorners, currentCharucoIds;
+                // interpolate corners
                 std::vector<cv::Point2f> charuco_corners;
                 std::vector<int> charuco_ids;
                 if(ids.size() > 0)
                 {
                     cv::aruco::interpolateCornersCharuco(corners, ids, image, charucoboard, charuco_corners,
                                                     charuco_ids);
-                    std::cout << "charuco corners size: " << charuco_corners.size() << std::endl; 
                 }
-
-                std::cout << "lines: " << __LINE__ << std::endl;
                 // draw results
                 cv::Mat sketch;
                 image.copyTo(sketch);
                 if(ids.size() > 0) 
                 {
-                    //cv::aruco::drawDetectedMarkers(sketch, corners);
+                    cv::aruco::drawDetectedMarkers(sketch, corners);
                 }
-                std::cout << "lines: " << __LINE__ << std::endl;
                 if(charuco_corners.size() > 0)
                 {
                     cv::aruco::drawDetectedCornersCharuco(sketch, charuco_corners, charuco_ids);
                 }
-                std::cout << "lines: " << __LINE__ << std::endl;
                 if (charuco_ids.size() > 0)
                 {
                     chessboardFound.at(i) = true;
@@ -412,11 +397,10 @@ int main(int argc, char** argv)
                     calcArucoCornerPositions(charucoboard, charuco_ids, objectPoints);
                     calibration.addCornersData(charuco_corners, objectPoints);
                     cv::imshow("Image", sketch);
-                    cv::waitKey(0);
-                } else 
-                {
-                    cv::imshow("Image", image);
                     cv::waitKey(50);
+                } else if (verbose)
+                {
+                    std::cerr << "# INFO: Did not detect charuco in image " << i + 1 << std::endl;
                 }
                 break;
             }
