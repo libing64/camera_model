@@ -1,0 +1,15 @@
+<launch>
+	<node pkg="charuco_creator" type="charuco_creator_node" name="charuco_creator" output="screen"  >
+		<param name="x_squares" type="int" value="5" />
+		<param name="y_squares" type="int" value="7" />
+		<param name="squares_size" type="double" value="0.040" />
+		<param name="markers_size" type="double" value="0.024" />
+		<param name="px_img_size_x" type="int" value="2800" />
+		<param name="px_img_size_y" type="int" value="4000" />
+		<param name="dictionaryId" type="int" value="10" />
+		<param name="margins" type="int" value="0" /> <!-- in pixels -->
+		<param name="borderBits" type="int" value="1" />
+		<param name="output_path" type="str" value="$(find charuco_detector)/boards/" />
+		<param name="showImage" type="bool" value="false" />
+	</node>
+</launch>

@@ -59,6 +59,12 @@ See [Camera.h](https://github.com/dvorak0/camera_model/blob/master/include/camod
 ./Calibration -w 9 -h 6 -i ../data/circles_grid -p circles_grid -e jpg --pattern circles_grid --camera-model pinhole --camera-name circles_grid_cam -v
 ```
 
+## charuco
+```
+./Calibration -w 5 -h 7 -s 0.04 -ml 0.024 -i ../data/charuco -p charuco -e jpg --pattern charuco --dp ../data/pattern/detector_params.yml -d 10 --camera-model pinhole --camera-name charuco_cam -v
+```
+
+
 # stereo calibration
 ```
 ./stereo_calib -i ../data/stereo_images/ -e jpg --prefix-l left --prefix-r right --camera-model mei
