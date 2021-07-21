@@ -401,7 +401,12 @@ int main(int argc, char** argv)
                 cv::Mat sketch;
                 imageL.copyTo(sketch);
                 cv::drawChessboardCorners(sketch, boardSize, cv::Mat(circle_pointsL), foundL);
-                cv::imshow("Image", sketch);
+                cv::imshow("Image - Left", sketch);
+
+                imageR.copyTo(sketch);
+                cv::drawChessboardCorners(sketch, boardSize, cv::Mat(circle_pointsR), foundR);
+                cv::imshow("Image - Right", sketch);
+                
                 cv::waitKey(50);
             }
             else if (verbose)
@@ -462,7 +467,10 @@ int main(int argc, char** argv)
                 calcArucoCornerPositions(charucoboard, charuco_idsL, objectPoints);
 
                 calibration.addCornersData(charuco_cornersL, charuco_cornersR, objectPoints);
-                cv::imshow("Image", sketch);
+
+                cv::imshow("Image - Left", sketch);
+                cv::imshow("Image - Right", sketch);//todo show right image
+
                 cv::waitKey(50);
             }
             else if (verbose)

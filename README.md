@@ -112,5 +112,10 @@ See [Camera.h](https://github.com/libing64/camera_model/blob/master/include/came
 ./stereo_calib -i ../data/stereo_images/ -e jpg --prefix-l left --prefix-r right --camera-model mei -v --view-results
 ```
 
+## stereo calibration circles (virtual test with mono image)
+```
+./stereo_calib -i ../data/circles_grid --pattern circles_grid -e jpg --prefix-l circles_grid --prefix-r circles_grid --camera-model mei -v --view-results
+```
+
 # TODO
 - [ ] add aruco marker
