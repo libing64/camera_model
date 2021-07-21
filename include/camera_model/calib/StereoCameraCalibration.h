@@ -21,6 +21,9 @@ public:
     void addChessboardData(const std::vector<cv::Point2f>& cornersLeft,
                            const std::vector<cv::Point2f>& cornersRight);
 
+    void addCornersData(const std::vector<cv::Point2f> &cornersL, 
+                        const std::vector<cv::Point2f> &cornersR,
+                        const std::vector<cv::Point3f> &scenePoints);
     bool calibrate(void);
 
     int sampleCount(void) const;
