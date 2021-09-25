@@ -27,7 +27,7 @@ static bool readArucoMarkerParameters(std::string filename, cv::Ptr<cv::aruco::D
     fs["minCornerDistanceRate"] >> params->minCornerDistanceRate;
     fs["minDistanceToBorder"] >> params->minDistanceToBorder;
     fs["minMarkerDistanceRate"] >> params->minMarkerDistanceRate;
-    fs["cornerRefinementMethod"] >> params->cornerRefinementMethod;
+    //fs["cornerRefinementMethod"] >> params->cornerRefinementMethod;
     fs["cornerRefinementWinSize"] >> params->cornerRefinementWinSize;
     fs["cornerRefinementMaxIterations"] >> params->cornerRefinementMaxIterations;
     fs["cornerRefinementMinAccuracy"] >> params->cornerRefinementMinAccuracy;
@@ -220,7 +220,7 @@ int main(int argc, char** argv)
         dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::PREDEFINED_DICTIONARY_NAME(dictionaryId));
 
         // create charuco board object
-        charucoboard = cv::aruco::CharucoBoard::create(boardSize.width, boardSize.height, squareSize, markerSize, dictionary);
+        charucoboard = cv::aruco::CharucoBoard::create(boardSize.width + 1, boardSize.height + 1, squareSize, markerSize, dictionary);
         detectorParams = cv::aruco::DetectorParameters::create();
         bool readOk = readArucoMarkerParameters(arucoParams, detectorParams);
         if (!readOk)
@@ -389,7 +389,7 @@ int main(int argc, char** argv)
                 {
                     cv::aruco::drawDetectedCornersCharuco(sketch, charuco_corners, charuco_ids);
                 }
-                if (charuco_ids.size() > 0)
+                if (charuco_ids.size() == boardSize.width * boardSize.height)
                 {
                     chessboardFound.at(i) = true;
                     //get 3d position of aruco corers

@@ -103,7 +103,11 @@ See [Camera.h](https://github.com/libing64/camera_model/blob/master/include/came
 
 ## charuco marker
 ```
-./intrinsic_calib -w 5 -h 7 -s 0.04 --marker-size 0.024 -i ../data/charuco -p charuco -e jpg --pattern charuco --dp ../data/pattern/detector_params.yml -d 10 --camera-model pinhole --camera-name charuco_cam -v --view-results
+./intrinsic_calib -w 4 -h 6 -s 0.04 --marker-size 0.024 -i ../data/charuco -p charuco -e jpg --pattern charuco --dp ../data/pattern/detector_params.yml -d 10 --camera-model pinhole --camera-name charuco_cam -v --view-results
+```
+
+```
+./intrinsic_calib -w 4 -h 6 -s 0.04 --marker-size 0.024 -i ../data/charuco -p charuco -e jpg --pattern charuco --dp ../data/pattern/detector_params.yml -d 10 --camera-model kannala-brandt --camera-name charuco_cam -v --view-results
 ```
 
 

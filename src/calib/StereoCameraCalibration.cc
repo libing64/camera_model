@@ -60,7 +60,7 @@ StereoCameraCalibration::calibrate(void)
     {
         return false;
     }
-
+    std::cout << __FUNCTION__ << "  " << __LINE__ << std::endl;
     // perform stereo calibration
     int imageCount = imagePointsLeft().size();
 
@@ -129,12 +129,13 @@ StereoCameraCalibration::calibrate(void)
             m_t = t_l_r;
         }
     }
-
+    std::cout << __FUNCTION__ << "  " << __LINE__ << std::endl;
     std::vector<cv::Mat> rvecsL(imageCount);
     std::vector<cv::Mat> tvecsL(imageCount);
     std::vector<cv::Mat> rvecsR(imageCount);
     std::vector<cv::Mat> tvecsR(imageCount);
 
+    std::cout << __FUNCTION__ << "  " << __LINE__ << std::endl;
     double* extrinsicCameraLParams[scenePoints().size()];
     for (int i = 0; i < imageCount; ++i)
     {

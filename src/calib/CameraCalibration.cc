@@ -75,7 +75,12 @@ bool
 CameraCalibration::calibrate(void)
 {
     int imageCount = m_imagePoints.size();
+    
+    for (auto m : m_imagePoints)
+        std::cout << "m_imagePoints: " << m << std::endl;
 
+    for (auto m : m_scenePoints)
+        std::cout << "m_scenePoints: " << m << std::endl;
     // compute intrinsic camera parameters and extrinsic parameters for each of the views
     std::vector<cv::Mat> rvecs;
     std::vector<cv::Mat> tvecs;
